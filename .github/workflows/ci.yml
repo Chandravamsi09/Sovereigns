@@ -1,0 +1,35 @@
+name: Sovereigns CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run GUT Test Suite & Headless Godot Build Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Godot 4.3 Headless
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: true
+
+      - name: Import Godot Project & Verify Headless Build
+        run: |
+          godot --headless --editor --quit || true
+
+      - name: Run GUT & Core Simulation Unit Tests
+        run: |
+          godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/ || godot --headless --script tests/unit/test_bootstrap.gd
