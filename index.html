@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereigns - 4X Strategy Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Top Glassmorphism HUD -->
+        <header id="top-bar" class="glass-panel">
+            <div class="brand">
+                <span class="crown-icon">👑</span>
+                <h1>SOVEREIGNS</h1>
+                <span class="version-tag">v1.0.0-rc1</span>
+            </div>
+
+            <div class="resource-group">
+                <div class="res-item" id="res-gold" title="Gold Treasury & Income">
+                    <span class="icon">🪙</span>
+                    <div class="val-group">
+                        <span class="value" id="gold-val">100</span>
+                        <span class="yield" id="gold-yield">+10/t</span>
+                    </div>
+                </div>
+
+                <div class="res-item" id="res-science" title="Science Research">
+                    <span class="icon">🧪</span>
+                    <div class="val-group">
+                        <span class="value" id="science-val">0</span>
+                        <span class="yield" id="science-yield">+5/t</span>
+                    </div>
+                </div>
+
+                <div class="res-item" id="res-culture" title="Culture & Expansion">
+                    <span class="icon">🎭</span>
+                    <div class="val-group">
+                        <span class="value" id="culture-val">0</span>
+                        <span class="yield" id="culture-yield">+2/t</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-control">
+                <div class="turn-badge">
+                    <span class="turn-label">TURN</span>
+                    <span class="turn-num" id="turn-num">1</span>
+                </div>
+                <button id="btn-end-turn" class="btn-primary glow-button">
+                    <span>END TURN</span>
+                    <span class="shortcut">Space</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Map Viewport -->
+        <main id="viewport">
+            <canvas id="hex-canvas"></canvas>
+
+            <!-- Selection Overlay / Inspector Panel -->
+            <aside id="inspector-panel" class="glass-panel hidden">
+                <button id="btn-close-inspector" class="btn-icon">✕</button>
+                <div id="inspector-content">
+                    <h3 id="inspector-title">Tile Info</h3>
+                    <div id="inspector-details"></div>
+                    <div id="inspector-actions" class="action-list"></div>
+                </div>
+            </aside>
+
+            <!-- Quick Action Floating Bar -->
+            <div id="floating-actions" class="glass-panel">
+                <button id="btn-open-tech" class="btn-action">
+                    <span class="icon">📜</span>
+                    <span>TECH TREE</span>
+                </button>
+                <button id="btn-open-city" class="btn-action">
+                    <span class="icon">🏛️</span>
+                    <span>CITIES</span>
+                </button>
+                <button id="btn-toggle-fow" class="btn-action">
+                    <span class="icon">👁️</span>
+                    <span>FOG OF WAR</span>
+                </button>
+                <button id="btn-rts-skirmish" class="btn-action highlight">
+                    <span class="icon">⚔️</span>
+                    <span>RTS SKIRMISH</span>
+                </button>
+            </div>
+
+            <!-- Notification Toast Stream -->
+            <div id="toast-container"></div>
+        </main>
+
+        <!-- Tech Tree Modal -->
+        <div id="tech-modal" class="modal-backdrop hidden">
+            <div class="modal-card glass-panel">
+                <div class="modal-header">
+                    <h2>📜 Technology Research Tree (DAG)</h2>
+                    <button id="btn-close-tech" class="btn-icon">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div id="tech-grid" class="tech-dag-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RTS Skirmish Modal -->
+        <div id="skirmish-modal" class="modal-backdrop hidden">
+            <div class="modal-card glass-panel battle-theme">
+                <div class="modal-header">
+                    <h2>⚔️ Real-Time Skirmish Battle Mode</h2>
+                    <button id="btn-close-skirmish" class="btn-icon">✕</button>
+                </div>
+                <div class="modal-body skirmish-body">
+                    <div class="army-status">
+                        <div class="army player-a">
+                            <h3>👑 Sovereigns Vanguard</h3>
+                            <div id="army-a-units" class="unit-chips"></div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="army player-b">
+                            <h3>💀 Iron Legion (AI)</h3>
+                            <div id="army-b-units" class="unit-chips"></div>
+                        </div>
+                    </div>
+                    <div id="skirmish-log" class="battle-log"></div>
+                    <button id="btn-start-skirmish" class="btn-primary btn-large">ENGAGE BATTLE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
