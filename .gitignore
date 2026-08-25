@@ -1,0 +1,25 @@
+# Godot 4+ specific ignores
+.godot/
+*.import
+export_presets.cfg
+
+# Imported translation files
+*.translation
+
+# Mono / C# build artifacts
+.vs/
+.idea/
+.vscode/
+bin/
+obj/
+*.csproj.user
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and scratch
+*.log
+scratch/
