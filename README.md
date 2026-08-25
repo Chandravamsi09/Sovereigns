@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Current Status: Phase 5 Completed (`v0.5.0-presentation`)
+## 🚀 Current Status: Phase 6 Completed (`v0.6.0-vfx`)
 
 - [x] **Phase 0: Bootstrap**: Project scaffolding, Godot 4.3 configuration, GUT test runner, GitHub Actions CI workflow setup.
 - [x] **Phase 1: Core Simulation Engine**: Hexagonal grid coordinate math, biomes/yields tile model, turn manager state machine, resource economy engine, and deterministic JSON save/load engine.
@@ -12,8 +12,8 @@
 - [x] **Phase 3: Exploitation Engine**: Infrastructure building catalog, Directed Acyclic Graph (DAG) Tech Tree engine, and inter-city Trade Route system.
 - [x] **Phase 4: Extermination & Combat Engine**: Unit stats model, turn-based combat resolution, high-performance C# A* pathfinder (`Sovereigns.AI`), and RTS Skirmish Mode arena.
 - [x] **Phase 5: Presentation Layer**: RTS/4X Camera Controller, 3D Hex Terrain Renderer, HUD Controller (resource bar, turn counter, action panel), and Main Game Scene wiring.
-- [ ] **Phase 6: Next-Gen VFX Pass** (Next)
-- [ ] **Phase 7: Strategic AI Opponents**
+- [x] **Phase 6: Next-Gen VFX Pass**: WorldEnvironment Forward+ lighting stack (Glow/Bloom, SSAO, SSR), animated water shader, chromatic aberration feedback shader, and GPUParticles3D impact sparks.
+- [ ] **Phase 7: Strategic AI Opponents** (Next)
 - [ ] **Phase 8: Polish & Release Candidate**
 
 ---
@@ -39,11 +39,11 @@ Sovereigns/
 │   └── main_game_scene.gd # Main game scene wiring
 ├── ai/             # High-performance C# Pathfinding (HexPathfinder.cs) & Strategic AI
 ├── vfx/            # Shaders, GPUParticles3D, WorldEnvironment, Volumetric Fog of War
+│   ├── environment/# WorldEnvSetup (Glow/Bloom, SSAO, SSR, SunLight)
+│   ├── shaders/    # water_ssr.gdshader, hit_feedback_aberration.gdshader
+│   └── particles/  # CombatSparks GPUParticles3D
 ├── tests/          # GUT test suites (unit & integration)
-│   └── unit/       # test_hex_grid.gd, test_turn_manager.gd, test_resource_manager.gd, test_save_system.gd,
-│                   # test_map_generator.gd, test_fog_of_war.gd, test_city_borders.gd, test_buildings.gd,
-│                   # test_tech_tree.gd, test_trade_routes.gd, test_unit_movement.gd, test_combat_resolution.gd,
-│                   # test_rts_skirmish.gd, test_presentation_wiring.gd
+│   └── unit/       # 15 GUT test suites covering core sim, presentation, and VFX
 ├── tools/          # Procedural map generator & balance editing tools
 └── docs/           # Architecture Decision Records (ADRs) & Game Design Document
 ```
@@ -52,7 +52,7 @@ Sovereigns/
 
 ## 🛠️ Running Automated Tests
 
-Headless GUT unit tests run across all core simulation systems & presentation wiring:
+Headless GUT unit tests run across all core simulation systems, presentation, and VFX stack:
 ```bash
 godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/
 ```
@@ -62,7 +62,7 @@ C# AI & Pathfinding NUnit / dotnet tests:
 dotnet test ai/Sovereigns.AI.csproj
 ```
 
-Test suite files (14 total):
+Test suite files (15 total):
 - `res://tests/unit/test_hex_grid.gd`
 - `res://tests/unit/test_turn_manager.gd`
 - `res://tests/unit/test_resource_manager.gd`
@@ -77,6 +77,7 @@ Test suite files (14 total):
 - `res://tests/unit/test_combat_resolution.gd`
 - `res://tests/unit/test_rts_skirmish.gd`
 - `res://tests/unit/test_presentation_wiring.gd`
+- `res://tests/unit/test_vfx_stack.gd`
 
 ---
 
