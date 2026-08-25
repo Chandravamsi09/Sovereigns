@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Current Status: Phase 7 Completed (`v0.7.0-ai`)
+## 🏆 Current Status: Release Candidate 1 (`v1.0.0-rc1`)
 
 - [x] **Phase 0: Bootstrap**: Project scaffolding, Godot 4.3 configuration, GUT test runner, GitHub Actions CI workflow setup.
 - [x] **Phase 1: Core Simulation Engine**: Hexagonal grid coordinate math, biomes/yields tile model, turn manager state machine, resource economy engine, and deterministic JSON save/load engine.
@@ -14,7 +14,7 @@
 - [x] **Phase 5: Presentation Layer**: RTS/4X Camera Controller, 3D Hex Terrain Renderer, HUD Controller (resource bar, turn counter, action panel), and Main Game Scene wiring.
 - [x] **Phase 6: Next-Gen VFX Pass**: WorldEnvironment Forward+ lighting stack (Glow/Bloom, SSAO, SSR), animated water shader, chromatic aberration feedback shader, and GPUParticles3D impact sparks.
 - [x] **Phase 7: Strategic AI Opponents**: Utility-based AI decision engine, difficulty tiers (`EASY`, `MEDIUM`, `HARD`), settlement evaluator, tech selection heuristics, and `StrategicAIAgent` controller.
-- [ ] **Phase 8: Polish & Release Candidate** (Next)
+- [x] **Phase 8: Polish & Release Candidate**: System balance config matrix, 20-turn multi-player integration test suite, complete Game Design Document (`docs/GDD.md`), and Release Candidate tag `v1.0.0-rc1`.
 
 ---
 
@@ -42,17 +42,21 @@ Sovereigns/
 │   ├── utility_ai.gd # Score curves & site evaluator
 │   └── strategic_ai_agent.gd # Turn execution controller
 ├── vfx/            # Shaders, GPUParticles3D, WorldEnvironment, Volumetric Fog of War
-├── tests/          # GUT test suites (unit & integration)
-│   └── unit/       # 16 GUT test suites covering core sim, presentation, VFX, and AI
+│   ├── environment/# WorldEnvSetup (Glow/Bloom, SSAO, SSR, SunLight)
+│   ├── shaders/    # water_ssr.gdshader, hit_feedback_aberration.gdshader
+│   └── particles/  # CombatSparks GPUParticles3D
+├── tests/          # GUT unit & integration test suites
+│   ├── unit/       # 16 unit test suites covering core sim, presentation, VFX, and AI
+│   └── integration/# test_full_game_loop.gd (20-turn multi-player simulation)
 ├── tools/          # Procedural map generator & balance editing tools
-└── docs/           # Architecture Decision Records (ADRs) & Game Design Document
+└── docs/           # Architecture Decision Records (ADRs) & Game Design Document (GDD.md)
 ```
 
 ---
 
-## 🛠️ Running Automated Tests
+## 🛠️ Running Automated Tests & Building
 
-Headless GUT unit tests run across all core simulation systems, presentation, VFX, and AI:
+Headless GUT unit & integration test suites:
 ```bash
 godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/
 ```
@@ -62,7 +66,7 @@ C# AI & Pathfinding NUnit / dotnet tests:
 dotnet test ai/Sovereigns.AI.csproj
 ```
 
-Test suite files (16 total):
+Test suite files (17 total across unit & integration):
 - `res://tests/unit/test_hex_grid.gd`
 - `res://tests/unit/test_turn_manager.gd`
 - `res://tests/unit/test_resource_manager.gd`
@@ -79,6 +83,7 @@ Test suite files (16 total):
 - `res://tests/unit/test_presentation_wiring.gd`
 - `res://tests/unit/test_vfx_stack.gd`
 - `res://tests/unit/test_strategic_ai.gd`
+- `res://tests/integration/test_full_game_loop.gd`
 
 ---
 
